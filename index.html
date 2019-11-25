@@ -1,0 +1,103 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">      
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1.0"/>
+       
+<!-- 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <link rel="apple-touch-icon" href="images/apple-touch-icon.png" />
+ -->
+        <title>Welcome</title>
+        <link rel="stylesheet" href="css/jquery.mobile-1.4.0.min.css" type="text/css">
+        <link rel="stylesheet" href="css/style.css"  type="text/css" />
+
+        <script type="text/javascript" charset="utf-8" src="js/jquery-2.0.3.min.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/jquery-ui.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/jquery.ui.touch-punch.min.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/jquery.mobile-1.4.0.min.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/jquery.flexisel.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/custom.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/scs_game_1player.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/scs_highscore.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/misc_required.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/em_visibility.js"></script>
+
+    </head>
+
+    <body> 
+        <div data-role="page" id="page-home">
+            <div data-role="panel" data-position-fixed="true" data-display="push" data-theme="b" id="nav-panel">
+                <ul data-role="listview">
+                    <li data-icon="delete"><a href="#" data-rel="close"> &nbsp;</a></li>
+                    <li id="how-to-play"><a href="help.html" data-rel="dialog" class="" data-transition="pop" data-position-to="window">How to Play</a></li>
+                </ul>
+            </div><!-- /panel -->
+            <div data-role="header" data-position="fixed">
+                   <div id="header-menu">
+                    <a href="#nav-panel" class="menubars"><img src="images/bars.png" alt="bars"></a>
+                    <h1>Conjecture!
+                        <a href="help.html" data-rel="dialog" class="" data-transition="pop" data-position-to="window">
+                            <span class="help-icon">?</span>
+                        </a>
+                    </h1>
+                </div>
+            </div>
+            <div role="main" class="ui-content">
+                <div class="container">
+                    <div class="inner-container">
+
+                        <img alt="" src="images/png-puzzel.png">
+                        <div class="btnwrap" id="game_home_difficulties"> <!-- <div class="btnwrap small"> --> <!-- hide if enabling the tutorial style="display:none;" -->
+                            <input type="button" id="easy"      onclick="StartGame(this.id);"   class="btnguess small"          value="Easy" >
+                            <input type="button" id="medium"    onclick="StartGame(this.id);"   class="btnguess small disabled" value="Medium" >
+                            <input type="button" id="hard"      onclick="StartGame(this.id);"   class="btnguess small disabled" value="Hard" >
+                        </div>
+                        
+                        <!--
+                        <div class="btnwrap big">
+                            <input type="button" id="tutorial"  onclick="StartGame(this.id);"   class="btnguess small"          value="Tutorial" >
+                        </div>
+                        -->
+                        
+                        <div class="btnwrap big" id="game_home_otherbuttons"><!-- hide if enabling the tutorial style="display:none;" -->
+
+                            <a href="help.html" data-rel="dialog" class="" data-transition="pop" data-position-to="window">
+                                <input type="button" class="btnguess small" value="How to Play" >
+                            </a>
+                            <input type="button" class="btnguess small" value="High Scores" onclick="window.location = 'highscores.html'" >
+                            <input type="button" class="btnguess small" value="Settings"    onclick="window.location = '#page-settings'" >
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /content -->
+        </div> <!-- /page -->
+
+
+
+        <div data-role="page" id="page-settings">
+            <div role="main" class="ui-content">
+                <div class="container">
+                    <div class="inner-container">
+
+                        <div class="panel-heading">
+                            <h3 class="panel-title">SETTINGS</h3>
+                        </div>
+
+                        <div class="btnwrap">
+                            <input type="button" id="BtnSetting_ResetHighScores"   onclick="ClearData();"         class="btnguess"  value="Clear Data" >
+                            <input type="button" id="BtnSetting_ShowTimer"         onclick="Setting_ShowTimer_Set();"   class="btnguess"  value="Show Timer: No" >
+                            <button type="button" class="btn-grey" onclick="window.location = '#page-home'">MAIN SCREEN</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div><!-- /content -->
+        </div> <!-- /page -->
+
+
+    </body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE HTML>
+<html>
+       <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">      
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1.0"/>
+       
+<!-- 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <link rel="apple-touch-icon" href="images/apple-touch-icon.png" />
+ -->
+        <title>Help</title>
+        <link rel="stylesheet" href="css/jquery.mobile-1.4.0.min.css" type="text/css">
+        <link rel="stylesheet" href="css/style.css"  type="text/css" />
+
+        <script type="text/javascript" charset="utf-8" src="js/jquery-2.0.3.min.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/jquery-ui.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/jquery.ui.touch-punch.min.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/jquery.mobile-1.4.0.min.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/jquery.flexisel.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/custom.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/scs_game_1player.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/scs_highscore.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/misc_required.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/em_visibility.js"></script>
+
+    </head>
+
+    <body>
+        
+        <div data-role="page" id="page-help-1"><!-- dialog-->
+
+            <div id="instructionsHelp" class="panel panel-default" style="width:100%;">
+                <div class="panel-heading">
+                    <h3 class="panel-title" id="panelTitle">HOW TO PLAY</h3>
+                    <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+                </div>
+                <div class="panel-body">
+
+                    <div id="subpage1">
+                        <p>Place each color in the correct position.</p>
+                        <p>Drag a color onto a box:</p>
+                        <p style="text-align: center;"><img alt="" src="images/bg-color-help.gif" style="max-width: 100%;"> </p>
+                       
+                        <p class="help_additional_page1_easy"   style="display:none;"><!-- no data--></p>
+                        <p class="help_additional_page1_medium" style="display:none;">Medium Difficulty: <span style="color:red; font-weight:bold;">also</span> select a border</p>
+                        <p class="help_additional_page1_hard"   style="display:none;">Hard Difficulty: also select a border <span style="color:red; font-weight:bold;">and</span> set of dots</p>
+
+                        <p>Then press the <img style="vertical-align: middle;" alt="" src="images/btn-guss-help.png"> button.</p>
+                        
+
+                        <p align="right"><a href="#" onclick="ShowHelpPage2();">Next >></a></p>
+                    </div>
+
+                    <div id="subpage2" style="display:none;"> <!-- SAME CONTENT as "page-help2" EXCEPT the close button-->
+                
+                        <!-- "help part 2" - in game.html and help.html -->
+                        <p>If you guess incorrectly, you'll get hint:</p>
+                        <p style="text-align: center;"><img alt="" class="pic_help" src="images/previous-guess-hint.png" style="max-width: 100%;"></p>
+                        <strong> Top Row</strong>
+                        <p>Number of correct <span class="help_object">colors</span></p>                        
+                        <strong>Bottom Row</strong><br/>
+                        <p>Number of correct <span class="help_object">colors</span> <span style="color:green">and in the right position</span></p>
+                        <p>&nbsp;</p>
+                       
+                        <div class="help_additional_page2_easy" style="display:none;">
+                            <p>Each box <span style="color:red; font-weight:bold;">must</span> have a color.</p>
+                            <p>Each color will appear at most once per solution.</p>
+                        </div>
+
+                        <div class="help_additional_page2_medium" style="display:none;">
+                           
+                            <p>1st Column: Colors</p>
+                            <p>2nd Column: Borders</p>
+                            
+                            <hr width="50%" />
+                            <p>Each box must have a color <span style="color:red; font-weight:bold;">and</span> a border.</p>
+                            <p>Each color/border will appear at most once per solution.</p>
+                        </div>
+
+                        <div class="help_additional_page2_hard" style="display:none;">
+                           
+                            <p>1st Column: Colors</p>
+                            <p>2nd Column: Borders</p>
+                            <p>3rd Column: Dots</p>
+
+                            <hr width="50%" />
+                            <p>Each box must have a color, border, <span style="color:red; font-weight:bold;">and</span> dot(s).</p>
+                            <p>Each color/border/dot will appear at most once per solution.</p>
+                        </div>
+
+                        <input type="button" class="btnguess" value="Close" onclick="$('.ui-dialog').dialog('close');">
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+      
+
+    </body>
+</html>
+

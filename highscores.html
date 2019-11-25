@@ -1,0 +1,84 @@
+<!DOCTYPE HTML>
+<html>
+       <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">      
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1.0"/>
+       
+<!-- 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <link rel="apple-touch-icon" href="images/apple-touch-icon.png" />
+ -->
+        <title>High Scores</title>
+        <link rel="stylesheet" href="css/jquery.mobile-1.4.0.min.css" type="text/css">
+        <link rel="stylesheet" href="css/style.css"  type="text/css" />
+
+        <script type="text/javascript" charset="utf-8" src="js/jquery-2.0.3.min.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/jquery-ui.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/jquery.ui.touch-punch.min.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/jquery.mobile-1.4.0.min.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/jquery.flexisel.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/custom.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/scs_game_1player.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/scs_highscore.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/misc_required.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/em_visibility.js"></script>
+
+    </head>
+
+    <body onload="menuNavigation();">
+        
+
+        <div data-role="page" id="page-highscore">
+            <div data-role="panel" data-position-fixed="true" data-display="push" data-theme="b" id="nav-panel">
+                <ul data-role="listview">
+                   <li data-icon="delete"><a href="#" data-rel="close"> &nbsp;</a></li>
+                    <li id="new-game"><a href="index.html" >Main Menu</a></li>
+                    <li id="how-to-play"><a href="help.html" data-rel="dialog" class="" data-transition="pop" data-position-to="window">How to Play</a></li>
+                </ul>
+            </div><!-- /panel -->
+            <div data-role="header" data-position="fixed">
+                <div id="header-menu">
+                    <a href="#nav-panel" class="menubars"><img src="images/bars.png" alt="bars"></a>
+                    <h1>Conjecture!
+                     <a href="help.html" data-rel="dialog" class="" data-transition="pop" data-position-to="window">
+                            <span class="help-icon">?</span>
+                        </a>
+                    </h1>
+                </div>
+            </div>
+            <div role="main" class="ui-content">
+                <div class="container">
+
+                    <div class="inner-container">
+                        <ul class="game-level" >
+                            <li>Easy</li>
+                            <li>Medium</li>
+                            <li>Hard</li>
+                        </ul>
+                        <div class="screen-info" style="display: none;">
+                            <div class="alert">You are now at <span id="level-name"></span> level.</div>
+                        </div>
+
+                        <div class="records">
+                            <h4>High Scores</h4>
+                            <table id="tblHighScores" class="tries">
+                                <thead>
+                                    <tr><th>Tries</th><th>Time</th><th>Date</th></tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                                    <!--<tr><td class="col1">1</td><td class="col2">1:01</td><td class="col3">1/11/2013</td></tr>-->
+
+                            <button type="button" class="btn-grey" onclick="window.location = 'index.html'">MAIN SCREEN</button>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /content -->
+        </div> <!-- /page -->
+
+    </body>
+</html>

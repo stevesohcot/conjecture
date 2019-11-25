@@ -1,0 +1,414 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">      
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1.0"/>
+
+<!-- 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <link rel="apple-touch-icon" href="images/apple-touch-icon.png" />
+ -->
+        <title>New Game Screen</title>
+        <link rel="stylesheet" href="css/jquery.mobile-1.4.0.min.css" type="text/css">
+        <link rel="stylesheet" href="css/style.css"  type="text/css" />
+
+        <script type="text/javascript" charset="utf-8" src="js/jquery-2.0.3.min.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/jquery-ui.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/jquery.ui.touch-punch.min.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/jquery.mobile-1.4.0.min.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/jquery.flexisel.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/custom.js"></script>
+	    <script type="text/javascript" charset="utf-8" src="js/scs_game_1player.js"></script>
+	    <script type="text/javascript" charset="utf-8" src="js/scs_highscore.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/misc_required.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/em_visibility.js"></script>
+    </head>
+
+    <body>
+        <div data-role="page" id="page-game">
+
+            <div data-role="panel" data-position-fixed="true" data-display="push" data-theme="b" id="nav-panel">
+                <ul data-role="listview">
+                    <li data-icon="delete"><a href="#" data-rel="close"> &nbsp;</a></li>
+                    <li id="new-game"><a href="index.html" >Main Menu</a></li>
+                    <li id="pause"><a href="#page-pause" data-rel="dialog" class="" data-transition="pop" data-position-to="window">Pause</a></li>
+                    <li id="how-to-play"><a href="help.html" data-rel="dialog" class="" data-transition="pop" data-position-to="window">How to Play</a></li>
+                </ul>
+            </div><!-- /panel -->
+
+            <div style="background-color:red;display:none;"> <!-- display:none -->
+            	<a href="#" onclick="CheatWinningCombo();">Win Next Guess</a>
+                <a href="#" onclick="RemoveColorsNotInSolution()">RemoveColorsNotInSolution</a>
+            </div>
+
+            <div id="tutorial_reminder" style="background-color:white; color:red; text-align:center;">
+                <span id="tutorial_reminder_1" style="display:none;">
+                    Next: drag the <span class="tutorial_first_position_color">[color]</span> into the 1st position
+                </span>
+                <span id="tutorial_reminder_2" style="display:none;">
+                    Drag <span class="tutorial_second_position_color">[color]</span> into the 2nd spot. <br />Put <span class="tutorial_fourth_position_color">[color]</span> in the 4th spot.
+                </span>
+                 <span id="tutorial_reminder_drag_from_top" style="display:none;">
+                    Drag from the top row onto the bottom row
+                </span>
+            </div>
+
+            <div data-role="header" data-position="fixed">
+                <div id="header-menu">
+                    <a href="#nav-panel" class="menubars"><img src="images/bars.png" alt="bars"></a>
+                    <h1>Conjecture!
+                        <a href="help.html" data-rel="dialog" class="" data-transition="pop" data-position-to="window">
+                            <span class="help-icon">?</span>
+                        </a>
+                    </h1>
+                </div>
+            </div>
+            <div role="main" class="ui-content">
+                <div class="container">
+                    <div class="inner-container">
+
+                     	<div id="you_win" class="panel panel-default" style="margin-bottom: 0px; display:none;">
+                            <div class="panel-heading">
+                                <h3 class="panel-title" id="you_win_header">Congratulations!</h3>
+                            </div>
+                            <div class="panel-body" id="you_win_body">
+                                <span class="clickbox">
+                                	You Win! 
+                                	<br/>You did it in <span id="winning_tries_and_time"> [] tries in [] time</span>
+                                    <div id="NewHighScore" style="display:none;">This is a <strong>new</strong> High Score!</div>
+                                </span>
+                            </div>
+                        </div>
+
+						<div id="you_win_continue" class="btnwrap" style="display:none;">
+                            <input onclick="StartGame($('#difficulty').html());" type="button" class="btnguess small" value="New Game" >
+                            <input onclick="window.location='index.html'" type="button" class="btnguess small" value="Change Difficulty" >
+                    	</div>
+                       
+
+
+                        <div id="instructions" class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><span id="instructions_header">Guess the sequence!</span></h3>
+                            </div>
+                            <div class="panel-body">
+
+                                <span class="clickbox" id="instructions_body">Drag <span id="hint-value">a color</span> onto a
+                                    <img src="images/q-box.png" alt="?" class="q-box">
+                                </span>
+                            </div>
+                        </div>
+
+                        
+                        <div id="my_guess_selection" class="box">
+
+                            <ul class="tabs" id="myTab" style="display:none;">
+                                <li class="active" 	id="tab_bgcolor"	style="display:none;"><a href="#tab1">Background </a></li>
+                                <li class="" 		id="tab_border"		style="display:none;"><a href="#tab2">Border </a></li>
+                                <li class="" 		id="tab_dots" 		style="display:none;"><a href="#tab3">Dots </a></li>
+                            </ul>
+                            <div class="tab-content" id="myTabContent">
+                                <div id="tab1" class="tab-pane fade active in">
+                                    <ul class="box-row backgrounds">
+                                        <li class="JC_item_draggable background_green selected" data-class="background_green"   data-bgcolor="green" ></li>
+                                        <li class="JC_item_draggable background_orange"         data-class="background_orange"  data-bgcolor="orange"></li>
+                                        <li class="JC_item_draggable background_blue"           data-class="background_blue"    data-bgcolor="blue"></li>
+                                        <li class="JC_item_draggable background_yellow"         data-class="background_yellow"  data-bgcolor="yellow"></li>
+                                        <li class="JC_item_draggable background_red"            data-class="background_red"     data-bgcolor="red"></li>
+                                        <li class="JC_item_draggable background_white"          data-class="background_white"   data-bgcolor="white"></li>
+                                    </ul>
+                                </div>
+                                <div id="tab2" class="tab-pane fade" style="display:none;">
+                                    <ul class="box-row borders">
+                                        <li class="JC_item_draggable border_green selected"     data-class="border_green"       data-bordercolor="green"></li>
+                                        <li class="JC_item_draggable border_orange"             data-class="border_orange"      data-bordercolor="orange"></li>
+                                        <li class="JC_item_draggable border_blue"               data-class="border_blue"        data-bordercolor="blue"></li>
+                                        <li class="JC_item_draggable border_yellow"             data-class="border_yellow"      data-bordercolor="yellow"></li>
+                                        <li class="JC_item_draggable border_red"                data-class="border_red"         data-bordercolor="red"></li>
+                                        <li class="JC_item_draggable border_white"              data-class="border_white"       data-bordercolor="white"></li>
+                                    </ul>
+                                </div>
+                                <div id="tab3" class="tab-pane fade" style="display:none;">
+                                    <ul class="box-row dots">
+                                        <li class="JC_item_draggable dot_1 selected"            data-class="dot_1"              data-dot="1"></li>
+                                        <li class="JC_item_draggable dot_2"                     data-class="dot_2"              data-dot="2"></li>
+                                        <li class="JC_item_draggable dot_3"                     data-class="dot_3"              data-dot="3"></li>
+                                        <li class="JC_item_draggable dot_4"                     data-class="dot_4"              data-dot="4"></li>
+                                        <li class="JC_item_draggable dot_5"                     data-class="dot_5"              data-dot="5"></li>
+                                        <li class="JC_item_draggable dot_6"                     data-class="dot_6"              data-dot="6"></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <ul class="obj_container current_row">
+                                <li class="JC_item_droppable obj">
+                                    <div class="border" data-bordercolor="">
+                                        <div class="background background_blank" data-bgcolor="">
+                                            <div class="dot question" data-dot="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="JC_item_droppable obj ">
+                                    <div class="border " data-bordercolor="">
+                                        <div class="background background_blank" data-bgcolor="">
+                                            <div class="dot question" data-dot="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="JC_item_droppable obj ">
+                                    <div class="border " data-bordercolor="">
+                                        <div class="background background_blank" data-bgcolor="">
+                                            <div class="dot question" data-dot="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="JC_item_droppable obj ">
+                                    <div class="border" data-bordercolor="">
+                                        <div class="background background_blank" data-bgcolor="">
+                                            <div class="dot question" data-dot="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div id="container_btnGuess" class="btnwrap">
+                            <input type="button" class="btnguess" value="Guess" onclick="Guess();">
+                        </div>
+
+
+
+
+                        <div id="page-tutorial_dialog" class="panel panel-default arrow_box down" style="display:none;">
+                                <div class="panel-heading">
+                                     <h3 class="panel-title" id="tutorial_title">HOW TO PLAY (1 of 3)</h3>
+                                </div>
+                                <div class="panel-body">
+
+                                    <div id="tutorial_1_1">
+                                        If you guess incorrectly, you'll get a hint:
+                                        <br /><strong> Top Row</strong>
+                                        <br/> Number of correct colors<br/>
+                                        <strong>Bottom Row</strong><br/>
+                                        Colors in the correct position
+                                        <p align="center">
+                                            <input type="button" class="btnguess" value="Next" onclick="TutorialGoToStepOnePartTwo();">
+                                        </p>
+                                    </div>
+
+                                    <div id="tutorial_1_2" style="display:none;">
+                                            1 color is in the correct position
+                                        <br />3 of the 4 colors are correct
+                                        <br />&nbsp;
+                                        <br /><strong>Next: drag the <span class="tutorial_first_position_color">[color]</span> color into the first position</strong>.
+                                        <br />Then hit "Guess" again.
+                                        <p align="center">
+                                            <input type="button" class="btnguess" value="Ok" onclick="TutorialCloseStepOne();">
+                                        </p>
+                                    </div>
+
+
+                                    <div id="tutorial_2_1" style="display:none;">
+                                            Good job!  Now you have all 4 colors.
+                                        <br />2 are in the correct position.
+                                        <br />&nbsp;
+                                        <br /><strong>Next: flip the <span class="tutorial_fourth_position_color">[color]</span> and <span class="tutorial_second_position_color">[color]</span>.</strong>
+                                        <br />First drag the <span class="tutorial_second_position_color">[color]</span> color into the second position.
+                                        <br />Then drag the <span class="tutorial_fourth_position_color">[color]</span> color into the last position.
+
+                                        <br />Then hit "Guess" again.
+                                        <p align="center">
+                                            <input type="button" class="btnguess" value="Ok" onclick="TutorialCloseStepTwo();">
+                                        </p>
+                                    </div>
+
+                                    <div id="tutorial_3_1" style="display:none;">
+                                        <p>You win!</p>
+                                        <p>You got all 4 colors in the right position.</p>
+                                        <p>You're ready for the real thing!</p>
+                                         <div id="container_btnGuess" class="btnwrap">
+                                            <input type="button" class="btnguess" value="Play" onclick="window.location='index.html';">
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                        </div>
+
+                    </div>
+
+                    <div id="previous_guesses" style="display:none;">
+                        <div class="seprater" style="display: none;">
+                            <p id="inspirational_text"></p>
+                        </div>
+                        <div class="multi-guess">
+                            <div class="obj_guess_option_outer">
+                                <ul class="obj_guess_option">
+                                    <li id="prev_guess_legend_bgcolor" 	class="bg"		style="display:none;"></li>
+                                    <li id="prev_guess_legend_border" 	class="border" 	style="display:none;"><div class="border-inner"></div></li>
+                                    <li id="prev_guess_legend_dot" 		class="dot_2" 	style="display:none;"></li>
+                                </ul>
+                            </div>
+
+                            <p>Previous Guesses (<span class="guesses-count">0</span>)</p>
+                            <div id="insert_previous_guess_here"></div>
+                            
+                            <div id="what_the_numbers_mean_2" class="panel panel-default arrow_box down" style="display:none;">
+                                <div class="panel-heading">
+                                	<h3 class="panel-title"> <a href="#page-help2" data-rel="dialog" class="" data-transition="pop" data-position-to="window" style="color: #FFF;">Tap for explanation</a></h3>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        
+                        <div id="how_to_read_the_legend" class="panel panel-default arrow_box">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">What the numbers mean</h3>
+                            </div>
+                            <div class="panel-body">
+
+                                <strong> Top Row</strong>
+                                <p>Number of correct <span class="help_object">colors</span></p>                        
+                                <strong>Bottom Row</strong><br/>
+                                <p>Correct <span class="help_object">colors</span> <span style="color:green">and in the right position</span></p>
+
+                            </div>
+                        </div>
+						
+                    </div>
+
+                    <div class="fixed-footer" id="game-footer">
+
+                        <div id="container_ad" style="display:none;">
+                           
+                            <script async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                                   
+                                    <ins class="adsbygoogle"
+                                         style="display:inline-block;width:320px;height:50px"
+                                         data-ad-client="ca-pub-4514868549482454"
+                                         data-ad-slot="9809522487"></ins>
+                                    <script>
+                                    (adsbygoogle = window.adsbygoogle || []).push({});
+                                    </script>
+                            </div>
+
+
+                        <div id="container_timer" style="display:none;">
+                            
+                            <div class="guess">
+                                <span class="guess-inner">
+                                    <span id="guesseslabel">Guesses: </span><span id="total_guesses" class="guesses-count">0</span>
+                                </span>
+                            </div>
+                            <div class="time">
+                                <span class="time-outer">
+                                    <span class="time-inner">
+                                        <span id="minutes">00</span>:<span id="seconds">00</span>
+                                    </span>
+                                </span>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div><!-- /content -->
+
+            <ul id="winning_combination" class="obj_guess" style="display:none;"></ul>
+            <div id="difficulty" style="display:none;"></div>
+
+        </div>
+        
+
+
+        <div data-role="page" id="page-pause"><!-- dialog-->
+            <div id="instructionsHelp" class="panel panel-default" style="width:100%;">
+                <div class="panel-heading">
+                    <h3 class="panel-title">PAUSE</h3>
+                    <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+                </div>
+                <div class="panel-body">
+                   <p id="catch_phrase">You deserve a break!</p>
+                   <p>The timer has been paused.</p>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <div data-role="page" id="page-help2"><!-- dialog-->
+            <div id="instructionsHelp" class="panel panel-default" style="width:100%;">
+                <div class="panel-heading">
+                    <h3 class="panel-title">If you're wrong</h3>
+                    <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+                </div>
+                <div class="panel-body">
+
+                        <!-- "help part 2" - in game.html and help.html EXCEPT the close button-->
+                        <p>If you guess incorrectly, you'll get hint:</p>
+                        <p style="text-align: center;"><img alt="" class="pic_help" src="images/previous-guess-hint.png" style="max-width: 100%;"></p>
+                        <strong> Top Row</strong>
+                        <p>Number of correct <span class="help_object">colors</span></p>                        
+                        <strong>Bottom Row</strong><br/>
+                        <p>Correct <span class="help_object">colors</span> <span style="color:green">and in the right position</span></p>
+                        <p>&nbsp;</p>
+                       
+                        <div class="help_additional_page2_easy" style="display:none;">
+                            <p>Each box <span style="color:red; font-weight:bold;">must</span> have a color.</p>
+                            <p>Each color will appear at most once per solution.</p>
+                        </div>
+
+                        <div class="help_additional_page2_medium" style="display:none;">
+                            
+                            <p>1st Column: Colors</p>
+                            <p>2nd Column: Borders</p>
+                            
+                            <hr width="50%" />
+                            <p>Each box must have a color <span style="color:red; font-weight:bold;">and</span> a border.</p>
+                            <p>Each color/border will appear at most once per solution.</p>
+                        </div>
+
+                        <div class="help_additional_page2_hard" style="display:none;">
+                            
+                            <p>1st Column: Colors</p>
+                            <p>2nd Column: Borders</p>
+                            <p>3rd Column: Dots</p>
+
+                            <hr width="50%" />
+                            <p>Each box must have a color, border, <span style="color:red; font-weight:bold;">and</span> dot(s).</p>
+                            <p>Each color/border/dot will appear at most once per solution.</p>
+                        </div>
+
+                        <input type="button" class="btnguess" value="Close" onclick="$.mobile.back();">
+
+                </div>
+            </div>
+        </div>
+
+
+
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-4514868549482454"
+             data-ad-slot="3812767057"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+
+
+
+    </body>
+</html>
+
